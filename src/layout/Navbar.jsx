@@ -12,7 +12,7 @@ const Navbar = () => {
           </NavLink>
         </li>
         <p className={styles.quotes}>
-          Insert some wise quotes
+          Greetings, User!
         </p>
         <div className={styles.navigate}>
           <li>

@@ -1,20 +1,58 @@
 html,
 body,
 #root {
+  box-sizing: border-box;
   min-height: 100%;
   margin: 0;
   --primary-bg-color: hsl(40, 100%, 90%);
-  --primary-content-color: hsl(272, 100%, 31%);
-  --secondary-content-color: hsl(285, 100%, 43%);
-  font-family: "Inter", sans-serif;
+  --primary-content-color: var(--purple-dark);
+  --secondary-content-color: var(--purple-semidark);
+  --purple-dark: #9723c9;
+  --purple-semidark: #a388ee;
+  --purple: #c4a1ff;
+  --purple-light: #e3dff2;
+
+  --red: #ff4911;
+  --magenta: #ff00f5;
+
+  --beige-dark: #e3a018;
+  --beige-semidark: #f4d738;
+  --beige: #ffdb58;
+  --beige-light: #fdfd96;
+
+  --sky-dark: #69d2e7;
+  --sky: #87ceeb;
+  --sky-light: #87ceeb;
+
+  --neo-brutal-border: 3px solid #000;
+  --neo-brutal-shadow: 5px 5px #000;
+  --brutal-radius: 8px;
+
+  font-family: "Trebuchet MS", "Arial Black", sans-serif;
+  color: #000;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+button,
+.neo-brutal-surface {
+  border: var(--neo-brutal-border);
+  border-radius: var(--brutal-radius);
+  box-shadow: var(--neo-brutal-shadow);
+}
+
+button {
+  font: inherit;
 }
 
 body {
-  background-color: hsl(40, 100%, 90%);
+  background-color: var(--primary-bg-color);
   background-size: 5rem 5rem;
   background-image:
     linear-gradient(to right, hsla(32, 21%, 41%, 0.18) 2px, transparent 1px),
     linear-gradient(to bottom, rgba(125, 105, 82, 0.18) 2px, transparent 1px);
 }
-
-

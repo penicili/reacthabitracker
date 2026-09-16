@@ -1,0 +1,235 @@
+.today {
+  width: min(100%, 46rem);
+  margin: 2.5rem auto 0;
+  color: #000;
+}
+
+.todayHeader {
+  display: flex;
+  align-items: end;
+  padding: 0.5rem 0;
+}
+
+.greetings {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.eyebrow,
+.title,
+.subtitle {
+  margin: 0;
+}
+
+.eyebrow {
+  color: #000;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.subtitle {
+  color: #000;
+  font-size: 0.95rem;
+}
+
+.habitcontainer {
+  margin-top: 1.25rem;
+  padding: 1.1rem 1.25rem 1.25rem;
+  background: var(--purple-light);
+  border: var(--neo-brutal-border);
+  border-radius: var(--brutal-radius);
+  box-shadow: var(--neo-brutal-shadow);
+}
+
+.completion {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.completion p {
+  margin: 0;
+}
+
+.completion p:first-child {
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.completion p:nth-child(2) {
+  margin-top: 0.35rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.completion > div:last-child {
+  color: #000;
+  font-size: 1.45rem;
+  font-weight: 800;
+  text-align: right;
+}
+
+.progressTrack {
+  height: 1rem;
+  margin-top: 1.2rem;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: var(--brutal-radius);
+}
+
+.progressValue {
+  width: 0%;
+  height: 100%;
+  background: var(--magenta);
+  border-right: 2px solid #000;
+}
+
+.habitHeader {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  margin: 2.5rem 0 0.75rem;
+  padding: 0 0.25rem;
+}
+
+.habitHeader p {
+  margin: 0;
+}
+
+.habitHeader > div > p:last-child {
+  margin-top: 0.35rem;
+  color: var(--primary-content-color);
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.addHabit {
+  padding: 0.65rem 0.9rem;
+  color: #000;
+  background: var(--beige);
+  border: var(--neo-brutal-border);
+  border-radius: var(--brutal-radius);
+  box-shadow: 3px 3px #000;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background-color 120ms ease;
+}
+
+.addHabit:hover {
+  background: var(--beige-semidark);
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px #000;
+}
+
+.addHabit:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+.habitContainer {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: 0.65rem;
+  margin-top: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  background: #fff;
+  border: var(--neo-brutal-border);
+  border-radius: var(--brutal-radius);
+  box-shadow: var(--neo-brutal-shadow);
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.habitContainer:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 2px 2px #000;
+}
+
+.habitContainer p {
+  margin: 0;
+}
+
+.habitContainer p:first-of-type {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.habitContainer p:nth-of-type(2) {
+  grid-column: 2;
+  grid-row: 2;
+  color: #000;
+  font-size: 0.9rem;
+}
+
+.habitContainer p:last-of-type {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  min-width: 5.5rem;
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-align: right;
+  text-transform: capitalize;
+}
+
+.statusIcon {
+  appearance: none;
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: var(--sky);
+  border: var(--neo-brutal-border);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.statusIcon:checked {
+  background: var(--magenta);
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+@media (max-width: 600px) {
+  .today {
+    margin-top: 1rem;
+  }
+
+  .habitContainer {
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    gap: 0.35rem 0.65rem;
+  }
+
+  .habitContainer p:nth-of-type(2) {
+    grid-column: 2;
+  }
+
+  .habitContainer p:last-of-type {
+    grid-column: 2;
+    grid-row: 3;
+    text-align: left;
+  }
+}

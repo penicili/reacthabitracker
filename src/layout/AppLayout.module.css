@@ -1,3 +1,5 @@
-.mainContainer{
-    padding: 2rem;
+.mainContainer {
+  width: min(100% - 2rem, 72rem);
+  margin: 0 auto;
+  padding: 1.25rem 0 3rem;
 }
