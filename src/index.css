@@ -1,0 +1,20 @@
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+  --primary-bg-color: hsl(40, 100%, 90%);
+  --primary-content-color: hsl(272, 100%, 31%);
+  --secondary-content-color: hsl(285, 100%, 43%);
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background-color: hsl(40, 100%, 90%);
+  background-size: 5rem 5rem;
+  background-image:
+    linear-gradient(to right, hsla(32, 21%, 41%, 0.18) 2px, transparent 1px),
+    linear-gradient(to bottom, rgba(125, 105, 82, 0.18) 2px, transparent 1px);
+}
+
+
