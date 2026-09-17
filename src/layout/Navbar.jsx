@@ -1,7 +1,20 @@
 import { NavLink } from "react-router";
+import { useState } from "react";
 import styles from "./Navbar.module.css";
 
+const quotes = [
+  "Small steps every day.",
+  "Progress, not perfection.",
+  "Keep showing up.",
+  "Consistency beats intensity.",
+  "You can do hard things.",
+];
+
 const Navbar = () => {
+  const [quote] = useState(
+    () => quotes[Math.floor(Math.random() * quotes.length)],
+  );
+
   return (
     <nav className={styles.navBar}>
       <div>{/* Logo */}</div>
@@ -11,9 +24,7 @@ const Navbar = () => {
             . habituals
           </NavLink>
         </li>
-        <p className={styles.quotes}>
-          Greetings, User!
-        </p>
+        <p className={styles.quotes}>{quote}</p>
         <div className={styles.navigate}>
           <li>
             <NavLink className={styles.navLink} to="/">

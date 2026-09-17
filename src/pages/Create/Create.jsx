@@ -1,6 +1,7 @@
 import styles from "./Create.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { addHabit } from "../../utils/habitStorage";
 
 const Create = () => {
   const navigate = useNavigate();
@@ -52,9 +53,7 @@ const Create = () => {
       return;
     }
 
-    // TODO: Post ke backend/ db lah
-    console.log("Creating new habit:", newHabit);
-    // TODO: Kembali ke halaman home
+    addHabit(newHabit);
     navigate("/");
   };
 

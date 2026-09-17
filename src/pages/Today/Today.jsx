@@ -1,58 +1,56 @@
 import styles from "./Today.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { getHabits, saveHabits } from "../../utils/habitStorage";
 
 const Today = () => {
+  let navigate = useNavigate();
+  const [habits, setHabits] = useState(getHabits);
 
-  let navigate = useNavigate()
-  const [habits, setHabits] = useState([
-    {
-      id: 1,
-      name: "Drink water",
-      quantity: "20 minutes",
-      isCompletedToday: false,
-    },
-    { id: 2, name: "Read", quantity: "20 minutes", isCompletedToday: false },
-    {
-      id: 3,
-      name: "Drink Coffee",
-      quantity: "20 minutes",
-      isCompletedToday: false,
-    },
-  ]);
-
-  // Ambil jam
-  // ubah jam ke pagi siang malem
-  // ubah pagi siang malem ke greeting 
-  // TODO: sesuain greetingnya
-  const greeting = 'Good Morning'
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12 ? "Good Morning" : hour < 18 ? "Good Afternoon" : "Good Evening";
+  const today = new Date();
+  const todayKey = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0"),
+  ].join("-");
 
   // TODO: pakai nama user
-  const userName = 'Sigma Widodo'
+  // const userName = "Anon";
 
   const handleToggleDone = (id) => {
     setHabits((habits) => {
-      return habits.map((habit) =>
-        habit.id === id
-          ? { ...habit, isCompletedToday: !habit.isCompletedToday }
-          : habit,
-      );
+      const updatedHabits = habits.map((habit) => {
+        if (habit.id !== id) {
+          return habit;
+        }
+
+        const isCheckedIn = habit.checkIns.includes(todayKey);
+        const checkIns = isCheckedIn
+          ? habit.checkIns.filter((date) => date !== todayKey)
+          : [...habit.checkIns, todayKey];
+
+        return { ...habit, checkIns };
+      });
+
+      saveHabits(updatedHabits);
+      return updatedHabits;
     });
   };
 
-  const handleHabitDetail = (id) =>{
-    // TODO: buka halaman detail habit
-    console.log(`Opening detail of habit of id ${id}`)
-  }
+  const handleHabitDetail = (id) => {
+    navigate(`detail/${id}`);
+  };
 
   const handleAddHabit = () => {
-    // TODO: redirect ke halaman add habit
-    navigate('create')
-    console.log('Redirect ke halaman add habit')
-  }
+    navigate("create");
+    console.log("Redirect ke halaman add habit");
+  };
 
-  const completedHabits = habits.filter(
-    (habit) => habit.isCompletedToday,
+  const completedHabits = habits.filter((habit) =>
+    habit.checkIns.includes(todayKey),
   ).length;
   const completionPercentage = Math.round(
     (completedHabits / habits.length) * 100,
@@ -62,7 +60,7 @@ const Today = () => {
     <div className={styles.today}>
       <div className={styles.todayHeader}>
         <div className={styles.greetings}>
-          <p className={styles.title}>{greeting}, {userName}!</p>
+          <p className={styles.title}>{greeting}!</p>
           <p className={styles.subtitle}>Today's Menu:</p>
         </div>
       </div>
@@ -88,29 +86,53 @@ const Today = () => {
       </div>
 
       <div className={styles.habitHeader}>
-        <button type="button" className={styles.addHabit} onClick={handleAddHabit}>
+        <button
+          type="button"
+          className={styles.addHabit}
+          onClick={handleAddHabit}
+        >
           + Add habit
         </button>
       </div>
-      {habits.map((habit) => (
-        <div key={habit.id} className={styles.habitContainer} style={{backgroundColor: habit.isCompletedToday ? 'hsl(0, 0%, 75%)' : '', boxShadow: habit.isCompletedToday ? '2px 2px #000' : ''}} >
-          <input
-            type="checkbox"
-            checked={habit.isCompletedToday}
-            onChange={() => handleToggleDone(habit.id)}
-            className={styles.statusIcon}
-          />
-          <div className={styles.habitContent}>
-            {habit.isCompletedToday ? <s className={styles.habitName}>{habit.name}</s> : <p className={styles.habitName}>{habit.name}</p>}
-            <p className={styles.habitQuantity}>{habit.quantity}</p>
-          </div>
-          <div className={styles.habitAction}>
-            <button onClick={() => handleHabitDetail(habit.id)} className={styles.habitDetail}>
-              Details
-            </button>
-          </div>
-        </div>
-      ))}
+      {habits.map((habit) =>
+        (() => {
+          const isCompletedToday = habit.checkIns.includes(todayKey);
+
+          return (
+            <div
+              key={habit.id}
+              className={styles.habitContainer}
+              style={{
+                backgroundColor: isCompletedToday ? "hsl(0, 0%, 75%)" : "",
+                boxShadow: isCompletedToday ? "2px 2px #000" : "",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={isCompletedToday}
+                onChange={() => handleToggleDone(habit.id)}
+                className={styles.statusIcon}
+              />
+              <div className={styles.habitContent}>
+                {isCompletedToday ? (
+                  <s className={styles.habitName}>{habit.name}</s>
+                ) : (
+                  <p className={styles.habitName}>{habit.name}</p>
+                )}
+                <p className={styles.habitQuantity}>{habit.quantity}</p>
+              </div>
+              <div className={styles.habitAction}>
+                <button
+                  onClick={() => handleHabitDetail(habit.id)}
+                  className={styles.habitDetail}
+                >
+                  Details
+                </button>
+              </div>
+            </div>
+          );
+        })(),
+      )}
     </div>
   );
 };
