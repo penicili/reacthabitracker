@@ -1,0 +1,163 @@
+.create {
+  width: min(100%, 46rem);
+  display: flex;
+  flex-direction: column;
+  margin: 2.5rem auto 0;
+}
+
+.createHeader {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.5rem 0;
+}
+
+.eyebrow,
+.title {
+  margin: 0;
+}
+
+.eyebrow {
+  color: #000;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.newHabitForm {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+  padding: 1.5rem;
+  background: #fff;
+  border: var(--neo-brutal-border);
+  border-radius: var(--brutal-radius);
+  box-shadow: var(--neo-brutal-shadow);
+}
+
+.errorMessage {
+  margin: 0.35rem 0 -0.25rem;
+  color: #d00000;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.newHabitForm > label {
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.newHabitForm > input {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.7rem 0.85rem;
+  color: #000;
+}
+
+.daysFieldset {
+  min-width: 0;
+  margin: 1rem 0 0;
+  padding: 1rem 0 0;
+  border: 0;
+  border-top: 3px solid #000;
+}
+
+.daysLabel {
+  padding: 0 0.5rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.weekDaySelector {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.eachWeekDay {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0.65rem 0.7rem;
+  background: var(--purple-light);
+  border: 2px solid #000;
+  border-radius: var(--brutal-radius);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.eachWeekDay label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.weekDay {
+  appearance: none;
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.weekDay:checked {
+  background: var(--magenta);
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+.weekDay:focus-visible,
+.newHabitForm > input:focus-visible {
+  outline: 3px solid var(--sky-dark);
+  outline-offset: 3px;
+}
+
+.submit {
+  padding: 1rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  background-color: var(--sky-dark);
+}
+.submit:hover {
+  color: white;
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px;
+  background-color: var(--magenta);
+}
+
+.submit:active {
+  background-color: var(--purple-dark);
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+@media (max-width: 600px) {
+  .create {
+    margin-top: 1rem;
+  }
+
+  .newHabitForm {
+    padding: 1.1rem;
+  }
+
+  .weekDaySelector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

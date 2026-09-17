@@ -1,7 +1,10 @@
 import styles from "./Today.module.css";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const Today = () => {
+
+  let navigate = useNavigate()
   const [habits, setHabits] = useState([
     {
       id: 1,
@@ -44,6 +47,7 @@ const Today = () => {
 
   const handleAddHabit = () => {
     // TODO: redirect ke halaman add habit
+    navigate('create')
     console.log('Redirect ke halaman add habit')
   }
 

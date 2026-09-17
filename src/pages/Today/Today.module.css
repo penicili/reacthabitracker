@@ -126,11 +126,6 @@
   font: inherit;
   font-size: 1rem;
   font-weight: 800;
-  cursor: pointer;
-  transition:
-    transform 120ms ease,
-    box-shadow 120ms ease,
-    background-color 120ms ease;
 }
 
 .addHabit:hover {

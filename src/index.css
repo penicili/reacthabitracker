@@ -38,6 +38,32 @@ body,
   box-sizing: inherit;
 }
 
+input {
+  color: #000;
+  background: var(--beige-light);
+  border: var(--neo-brutal-border);
+  border-radius: var(--brutal-radius);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  outline: none;
+  transition:
+    background-color 120ms ease,
+    box-shadow 120ms ease,
+    transform 120ms ease;
+}
+
+input::placeholder {
+  color: #5f522b;
+  opacity: 1;
+}
+
+input:focus {
+  background: #fff;
+  box-shadow: 4px 4px var(--magenta);
+  transform: translate(-1px, -1px);
+}
+
 button,
 .neo-brutal-surface {
   border: var(--neo-brutal-border);
@@ -47,6 +73,12 @@ button,
 
 button {
   font: inherit;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background-color 120ms ease,
+    color 120ms ease;
+  cursor: pointer;
 }
 
 body {
