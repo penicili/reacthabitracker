@@ -18,6 +18,15 @@ const Today = () => {
     },
   ]);
 
+  // Ambil jam
+  // ubah jam ke pagi siang malem
+  // ubah pagi siang malem ke greeting 
+  // TODO: sesuain greetingnya
+  const greeting = 'Good Morning'
+
+  // TODO: pakai nama user
+  const userName = 'Sigma Widodo'
+
   const handleToggleDone = (id) => {
     setHabits((habits) => {
       return habits.map((habit) =>
@@ -27,6 +36,16 @@ const Today = () => {
       );
     });
   };
+
+  const handleHabitDetail = (id) =>{
+    // TODO: buka halaman detail habit
+    console.log(`Opening detail of habit of id ${id}`)
+  }
+
+  const handleAddHabit = () => {
+    // TODO: redirect ke halaman add habit
+    console.log('Redirect ke halaman add habit')
+  }
 
   const completedHabits = habits.filter(
     (habit) => habit.isCompletedToday,
@@ -39,7 +58,7 @@ const Today = () => {
     <div className={styles.today}>
       <div className={styles.todayHeader}>
         <div className={styles.greetings}>
-          <p className={styles.title}>Good morning, Alex</p>
+          <p className={styles.title}>{greeting}, {userName}!</p>
           <p className={styles.subtitle}>Today's Menu:</p>
         </div>
       </div>
@@ -65,20 +84,27 @@ const Today = () => {
       </div>
 
       <div className={styles.habitHeader}>
-        <button type="button" className={styles.addHabit}>
+        <button type="button" className={styles.addHabit} onClick={handleAddHabit}>
           + Add habit
         </button>
       </div>
       {habits.map((habit) => (
-        <div key={habit.id} className={styles.habitContainer}>
+        <div key={habit.id} className={styles.habitContainer} style={{backgroundColor: habit.isCompletedToday ? 'hsl(0, 0%, 75%)' : '', boxShadow: habit.isCompletedToday ? '2px 2px #000' : ''}} >
           <input
             type="checkbox"
             checked={habit.isCompletedToday}
             onChange={() => handleToggleDone(habit.id)}
             className={styles.statusIcon}
           />
-          <p>{habit.name}</p>
-          <p>{habit.quantity}</p>
+          <div className={styles.habitContent}>
+            {habit.isCompletedToday ? <s className={styles.habitName}>{habit.name}</s> : <p className={styles.habitName}>{habit.name}</p>}
+            <p className={styles.habitQuantity}>{habit.quantity}</p>
+          </div>
+          <div className={styles.habitAction}>
+            <button onClick={() => handleHabitDetail(habit.id)} className={styles.habitDetail}>
+              Details
+            </button>
+          </div>
         </div>
       ))}
     </div>
