@@ -1,0 +1,191 @@
+.detail {
+  width: min(100%, 46rem);
+  margin: 2.5rem auto 0;
+  color: #000;
+}
+
+.detailHeader {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.5rem 0;
+}
+
+.detailForm {
+  display: grid;
+}
+
+.doneDays,
+.detailQuantity {
+  margin: 0;
+}
+
+.fieldLabel {
+  margin-bottom: -0.25rem;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.habitName {
+  width: 100%;
+  padding: 0.2rem 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 3px solid #000;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+.habitName:focus {
+  background: #fff;
+  box-shadow: 4px 4px var(--magenta);
+  outline: 0;
+}
+
+.doneDays {
+  color: var(--primary-content-color);
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.detailDetail {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+  padding: 1.5rem;
+  background: #fff;
+  border: var(--neo-brutal-border);
+  border-radius: var(--brutal-radius);
+  box-shadow: var(--neo-brutal-shadow);
+}
+
+.detailQuantity {
+  width: 100%;
+  padding: 1rem 1.1rem;
+  background: var(--beige);
+  border: var(--neo-brutal-border);
+  border-radius: var(--brutal-radius);
+  box-shadow: 3px 3px #000;
+  font: inherit;
+  font-size: 1.35rem;
+  font-weight: 900;
+}
+
+.detailQuantity:focus {
+  outline: 3px solid var(--sky-dark);
+  outline-offset: 3px;
+}
+
+.submit {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  color: #000;
+  background: var(--sky-dark);
+  border: var(--neo-brutal-border);
+  border-radius: var(--brutal-radius);
+  box-shadow: var(--neo-brutal-shadow);
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.submit:hover {
+  color: #fff;
+  background: var(--magenta);
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px #000;
+}
+
+.submit:active {
+  background: var(--purple-dark);
+  transform: translate(5px, 5px);
+  box-shadow: none;
+}
+
+.submit:focus-visible {
+  outline: 3px solid var(--beige-dark);
+  outline-offset: 3px;
+}
+
+.daysFieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 1rem 0 0;
+  border: 0;
+  border-top: 3px solid #000;
+}
+
+.daysLabel {
+  padding: 0 0.5rem 0 0;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.weekDaySelector {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.eachWeekDay {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0.65rem 0.7rem;
+  background: var(--purple-light);
+  border: 2px solid #000;
+  border-radius: var(--brutal-radius);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.eachWeekDay label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.weekDay {
+  appearance: none;
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.weekDay:checked {
+  background: var(--magenta);
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+.weekDay:focus-visible {
+  outline: 3px solid var(--sky-dark);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .detail {
+    margin-top: 1rem;
+  }
+
+  .detailDetail {
+    padding: 1.1rem;
+  }
+
+  .weekDaySelector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
