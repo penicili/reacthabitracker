@@ -55,7 +55,14 @@ const Detail = () => {
         habit.id === habitDetails.id ? habitDetails : habit,
       ),
     );
-    navigate('/')
+    navigate("/", {
+      state: {
+        alert: {
+          message: "Habit updated successfully.",
+          type: "success",
+        },
+      },
+    });
   };
 
   return (

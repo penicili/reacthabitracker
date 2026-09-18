@@ -1,11 +1,14 @@
 import styles from "./Today.module.css";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { getHabits, saveHabits } from "../../utils/habitStorage";
+import Alert from "../../layout/Alert";
 
 const Today = () => {
   let navigate = useNavigate();
+  const location = useLocation();
   const [habits, setHabits] = useState(getHabits);
+  const [alert, setAlert] = useState(() => location.state?.alert ?? null);
 
   const hour = new Date().getHours();
   const greeting =
@@ -44,6 +47,17 @@ const Today = () => {
     navigate(`detail/${id}`);
   };
 
+  const handleDeleteHabit = (id) => {
+    const updatedHabits = habits.filter((habit) => habit.id !== id);
+
+    setHabits(updatedHabits);
+    saveHabits(updatedHabits);
+    setAlert({
+      message: "Habit deleted successfully.",
+      type: "success",
+    });
+  };
+
   const handleAddHabit = () => {
     navigate("create");
     console.log("Redirect ke halaman add habit");
@@ -52,88 +66,103 @@ const Today = () => {
   const completedHabits = habits.filter((habit) =>
     habit.checkIns.includes(todayKey),
   ).length;
-  const completionPercentage = Math.round(
-    (completedHabits / habits.length) * 100,
-  );
+  const completionPercentage =
+    habits.length > 0 ? Math.round((completedHabits / habits.length) * 100) : 0;
 
   return (
-    <div className={styles.today}>
-      <div className={styles.todayHeader}>
-        <div className={styles.greetings}>
-          <p className={styles.title}>{greeting}!</p>
-          <p className={styles.subtitle}>Today's Menu:</p>
-        </div>
-      </div>
-
-      <div className={styles.habitcontainer}>
-        <div className={styles.completion}>
-          <div>
-            <p>Today's progress</p>
-            <p>
-              {completedHabits} of {habits.length} habits completed
-            </p>
-          </div>
-          <div>
-            <p>{completionPercentage}%</p>
+    <>
+      <Alert
+        alert={Boolean(alert)}
+        message={alert?.message}
+        type={alert?.type}
+        onClose={() => setAlert(null)}
+      />
+      <div className={styles.today}>
+        <div className={styles.todayHeader}>
+          <div className={styles.greetings}>
+            <p className={styles.title}>{greeting}!</p>
+            <p className={styles.subtitle}>Today's Menu:</p>
           </div>
         </div>
-        <div className={styles.progressTrack}>
-          <div
-            className={styles.progressValue}
-            style={{ width: `${completionPercentage}%` }}
-          ></div>
-        </div>
-      </div>
 
-      <div className={styles.habitHeader}>
-        <button
-          type="button"
-          className={styles.addHabit}
-          onClick={handleAddHabit}
-        >
-          + Add habit
-        </button>
-      </div>
-      {habits.map((habit) =>
-        (() => {
-          const isCompletedToday = habit.checkIns.includes(todayKey);
-
-          return (
-            <div
-              key={habit.id}
-              className={styles.habitContainer}
-              style={{
-                backgroundColor: isCompletedToday ? "hsl(0, 0%, 75%)" : "",
-                boxShadow: isCompletedToday ? "2px 2px #000" : "",
-              }}
-            >
-              <input
-                type="checkbox"
-                checked={isCompletedToday}
-                onChange={() => handleToggleDone(habit.id)}
-                className={styles.statusIcon}
-              />
-              <div className={styles.habitContent}>
-                {isCompletedToday ? (
-                  <s className={styles.habitName}>{habit.name}</s>
-                ) : (
-                  <p className={styles.habitName}>{habit.name}</p>
-                )}
-                <p className={styles.habitQuantity}>{habit.quantity}</p>
-              </div>
-              <div className={styles.habitAction}>
-                <button
-                  onClick={() => handleHabitDetail(habit.id)}
-                  className={styles.habitDetail}
-                >
-                  Details
-                </button>
-              </div>
+        <div className={styles.habitcontainer}>
+          <div className={styles.completion}>
+            <div>
+              <p>Today's progress</p>
+              <p>
+                {completedHabits} of {habits.length} habits completed
+              </p>
             </div>
-          );
-        })(),
-      )}
-    </div>
+            <div>
+              <p>{completionPercentage}%</p>
+            </div>
+          </div>
+          <div className={styles.progressTrack}>
+            <div
+              className={styles.progressValue}
+              style={{ width: `${completionPercentage}%` }}
+            ></div>
+          </div>
+        </div>
+
+        <div className={styles.habitHeader}>
+          <button
+            type="button"
+            className={styles.addHabit}
+            onClick={handleAddHabit}
+          >
+            + Add habit
+          </button>
+        </div>
+        {habits.map((habit) =>
+          (() => {
+            const isCompletedToday = habit.checkIns.includes(todayKey);
+
+            return (
+              <div
+                key={habit.id}
+                className={styles.habitContainer}
+                style={{
+                  backgroundColor: isCompletedToday ? "hsl(0, 0%, 75%)" : "",
+                  boxShadow: isCompletedToday ? "2px 2px #000" : "",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={isCompletedToday}
+                  onChange={() => handleToggleDone(habit.id)}
+                  className={styles.statusIcon}
+                />
+                <div className={styles.habitContent}>
+                  {isCompletedToday ? (
+                    <s className={styles.habitName}>{habit.name}</s>
+                  ) : (
+                    <p className={styles.habitName}>{habit.name}</p>
+                  )}
+                  <p className={styles.habitQuantity}>{habit.quantity}</p>
+                </div>
+                <div className={styles.habitAction}>
+                  <button
+                    type="button"
+                    className={styles.habitDetail}
+                    onClick={() => handleHabitDetail(habit.id)}
+                  >
+                    Details
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.deleteHabit}
+                    onClick={() => handleDeleteHabit(habit.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            );
+          })(),
+        )}
+      </div>
+    </>
   );
 };
 export default Today;

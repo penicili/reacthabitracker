@@ -54,7 +54,14 @@ const Create = () => {
     }
 
     addHabit(newHabit);
-    navigate("/");
+    navigate("/", {
+      state: {
+        alert: {
+          message: "Habit created successfully.",
+          type: "success",
+        },
+      },
+    });
   };
 
   return (

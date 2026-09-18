@@ -226,6 +226,41 @@
   box-shadow: none;
 }
 
+.habitAction {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: 0.5rem;
+}
+
+.deleteHabit {
+  padding: 0.65rem 0.9rem;
+  color: #fff;
+  background: var(--red);
+  border: var(--neo-brutal-border);
+  border-radius: var(--brutal-radius);
+  box-shadow: 3px 3px #000;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background-color 120ms ease;
+}
+
+.deleteHabit:hover {
+  background: #d93808;
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px #000;
+}
+
+.deleteHabit:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
 @media (max-width: 600px) {
   .today {
     margin-top: 1rem;
