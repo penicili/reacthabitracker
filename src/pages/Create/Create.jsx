@@ -68,7 +68,7 @@ const Create = () => {
     <div className={styles.create}>
       <div className={styles.createHeader}>
         <p className={styles.eyebrow}>Feeling Brave?</p>
-        <p className={styles.title}>Create a new habit</p>
+        <p className={styles.title}>Start a new habit</p>
       </div>
       <form className={styles.newHabitForm} onSubmit={handleSubmit}>
         {error.name && <p className={styles.errorMessage}>{error.name}</p>}
