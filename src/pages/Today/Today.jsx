@@ -4,8 +4,18 @@ import { useLocation, useNavigate } from "react-router";
 import { getHabits, saveHabits } from "../../utils/habitStorage";
 import Alert from "../../layout/Alert";
 
+const dayNames = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
 const Today = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const [habits, setHabits] = useState(getHabits);
   const [alert, setAlert] = useState(() => location.state?.alert ?? null);
@@ -14,18 +24,16 @@ const Today = () => {
   const greeting =
     hour < 12 ? "Good Morning" : hour < 18 ? "Good Afternoon" : "Good Evening";
   const today = new Date();
+  const todayName = dayNames[today.getDay()];
   const todayKey = [
     today.getFullYear(),
     String(today.getMonth() + 1).padStart(2, "0"),
     String(today.getDate()).padStart(2, "0"),
   ].join("-");
 
-  // TODO: pakai nama user
-  // const userName = "Anon";
-
   const handleToggleDone = (id) => {
-    setHabits((habits) => {
-      const updatedHabits = habits.map((habit) => {
+    setHabits((currentHabits) => {
+      const updatedHabits = currentHabits.map((habit) => {
         if (habit.id !== id) {
           return habit;
         }
@@ -60,14 +68,15 @@ const Today = () => {
 
   const handleAddHabit = () => {
     navigate("create");
-    console.log("Redirect ke halaman add habit");
   };
 
-  const completedHabits = habits.filter((habit) =>
+  const todayHabits = habits.filter((habit) => habit.days.includes(todayName));
+  const completedHabits = todayHabits.filter((habit) =>
     habit.checkIns.includes(todayKey),
   ).length;
-  const completionPercentage =
-    habits.length > 0 ? Math.round((completedHabits / habits.length) * 100) : 0;
+  const completionPercentage = todayHabits.length
+    ? Math.round((completedHabits / todayHabits.length) * 100)
+    : 0;
 
   return (
     <>
@@ -90,7 +99,7 @@ const Today = () => {
             <div>
               <p>Today's progress</p>
               <p>
-                {completedHabits} of {habits.length} habits completed
+                {completedHabits} of {todayHabits.length} habits completed
               </p>
             </div>
             <div>
@@ -114,55 +123,54 @@ const Today = () => {
             + Add habit
           </button>
         </div>
-        {habits.map((habit) =>
-          (() => {
-            const isCompletedToday = habit.checkIns.includes(todayKey);
+        {todayHabits.map((habit) => {
+          const isCompletedToday = habit.checkIns.includes(todayKey);
 
-            return (
-              <div
-                key={habit.id}
-                className={styles.habitContainer}
-                style={{
-                  backgroundColor: isCompletedToday ? "hsl(0, 0%, 75%)" : "",
-                  boxShadow: isCompletedToday ? "2px 2px #000" : "",
-                }}
-              >
-                <input
-                  type="checkbox"
-                  checked={isCompletedToday}
-                  onChange={() => handleToggleDone(habit.id)}
-                  className={styles.statusIcon}
-                />
-                <div className={styles.habitContent}>
-                  {isCompletedToday ? (
-                    <s className={styles.habitName}>{habit.name}</s>
-                  ) : (
-                    <p className={styles.habitName}>{habit.name}</p>
-                  )}
-                  <p className={styles.habitQuantity}>{habit.quantity}</p>
-                </div>
-                <div className={styles.habitAction}>
-                  <button
-                    type="button"
-                    className={styles.habitDetail}
-                    onClick={() => handleHabitDetail(habit.id)}
-                  >
-                    Details
-                  </button>
-                  <button
-                    type="button"
-                    className={styles.deleteHabit}
-                    onClick={() => handleDeleteHabit(habit.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
+          return (
+            <div
+              key={habit.id}
+              className={styles.habitContainer}
+              style={{
+                backgroundColor: isCompletedToday ? "hsl(0, 0%, 75%)" : "",
+                boxShadow: isCompletedToday ? "2px 2px #000" : "",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={isCompletedToday}
+                onChange={() => handleToggleDone(habit.id)}
+                className={styles.statusIcon}
+              />
+              <div className={styles.habitContent}>
+                {isCompletedToday ? (
+                  <s className={styles.habitName}>{habit.name}</s>
+                ) : (
+                  <p className={styles.habitName}>{habit.name}</p>
+                )}
+                <p className={styles.habitQuantity}>{habit.quantity}</p>
               </div>
-            );
-          })(),
-        )}
+              <div className={styles.habitAction}>
+                <button
+                  type="button"
+                  className={styles.habitDetail}
+                  onClick={() => handleHabitDetail(habit.id)}
+                >
+                  Details
+                </button>
+                <button
+                  type="button"
+                  className={styles.deleteHabit}
+                  onClick={() => handleDeleteHabit(habit.id)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </>
   );
 };
+
 export default Today;
